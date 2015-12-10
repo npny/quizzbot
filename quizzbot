@@ -8,7 +8,7 @@ function init()
 {
 	// Parse arguments
 	var args = process.argv.slice(2);
-	if(args.length < 2) return console.log('Usage : quizzbot <server> <chan> [<nick> <question-file>].\nExample : quizzbot irc.freenode.net superquizz QuizzBot questions.txt\n');
+	if(args.length < 2) return console.log('Usage : quizzbot <server> <chan> [<nick> <question-file>]\nExample : quizzbot irc.freenode.net superquizz QuizzBot questions.txt\n');
 
 	var server = args[0];
 	var channel = '#' + args[1];
