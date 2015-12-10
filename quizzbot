@@ -1,0 +1,37 @@
+#!/usr/bin/env node
+
+var fs = require('fs');
+var irc = require('irc');
+var Quizz = require('./quizzbot.js');
+
+function init()
+{
+	// Parse arguments
+	var args = process.argv.slice(2);
+	if(args.length < 2) return console.log('Usage : quizzbot <server> <chan> [<nick> <question-file>].\nExample : quizzbot irc.freenode.net superquizz QuizzBot questions.txt\n');
+
+	var server = args[0];
+	var channel = '#' + args[1];
+	var nick = args[2] || 'QuizzBot';
+	var questionsFile = args[3] || 'questions.txt';
+
+	// Load questions
+	fs.readFile(questionsFile, 'utf8', function (err, data) {
+		if (err) return console.log(err);
+		var questions = data.split('\n');
+
+		// Spawn the IRC client
+		var client = new irc.Client(server, nick, {channels: [channel]});
+		client.addListener('error', function(message){ console.log('error: ', message); });
+		client.join(channel);
+
+		// And launch the quizz !
+		var sayMessage = function(message) { client.say(channel, message); };
+		var receiveMessage = function(from, message) { quizz.receiveMessage(from, message); };
+
+		var quizz = new Quizz(sayMessage, questions);
+		client.addListener('message' + channel, receiveMessage);
+	});
+}
+
+init();

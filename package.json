@@ -1,0 +1,16 @@
+{
+	"name": "quizzbot",
+	"version": "1.0.0",
+	"description": "A simple IRC quizz bot",
+	"keywords": ["quizz", "bot", "irc"],
+
+	"author": "npny (https://github.com/npny/)",
+	"license": "MIT",
+	"repository": "npny/quizzbot",
+
+	"main": "./quizzbot.js",
+	"bin": "./quizzbot",
+	"dependencies": {
+		"irc": "0.4.0"
+	}
+}
